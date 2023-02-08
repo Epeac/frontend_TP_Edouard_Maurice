@@ -16,7 +16,7 @@
 
 <script>
 import axios from "axios";
-
+import {userRole, fetchFilmInfos, deleteFilm} from "/src/api.js";
 export default {
   data() {
     return {
@@ -26,45 +26,21 @@ export default {
     };
   },
   async mounted() {
-    await this.fetchFilmInfos();
-    this.role = await this.userRole();
+    this.filmInfos = await fetchFilmInfos(this.filmId);
+    this.role = await userRole();
   },
   methods: {
-    async fetchFilmInfos() {
-      const {data} = await axios.get(`http://localhost:3000/locations/${this.filmId}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem("token")}`,
-        }
-      });
-      this.filmInfos = data;
-    },
-    async userRole() {
-      try {
-        const response = await axios.get('http://localhost:3000/users/me', {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem("token")}`,
-          }
-        },);
-        return response.data.role;
-      } catch (error) {
-        return error.response;
-      }
-    },
     async confirmDelete() {
       if(confirm("Are you sure you want to delete this film ?")) {
         await this.deleteFilm();
       }
     },
     async deleteFilm() {
-      try {
-        await axios.delete(`http://localhost:3000/locations/${this.filmId}`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          }
-        });
+      let response = await deleteFilm(this.filmId);
+      if(response.success) {
         alert('Film deleted successfully !');
         this.$router.back();
-      } catch (error) {
+      } else {
         alert('An error occurred, please try again later');
       }
     },

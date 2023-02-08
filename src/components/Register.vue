@@ -18,8 +18,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-import Login from './Login.vue';
+import {register} from '/src/api.js';
 export default {
   data() {
     return {
@@ -30,27 +29,12 @@ export default {
   },
   methods: {
     async submitRegisterForm() {
-      try {
-        const response = await axios.post('http://localhost:3000/users/register', {
-          username: this.username,
-          password: this.password,
-        });
-        //await Login.login(this.username, this.password);
-
-        try {
-          const response = await axios.post('http://localhost:3000/users/login', {
-            username: this.username,
-            password: this.password,
-          });
-          localStorage.setItem('token', response.data.jwt);
-          localStorage.setItem('username', this.username);
-        } catch (error) {
-          console.error(error);
-        }
-
+      let response = await register(this.username, this.password);
+      if(response.success) {
         this.$router.push({ path: '/' });
-      } catch (error) {
-        if (error.response.status === 400) {
+      }
+      else {
+        if (response.error.status === 400) {
           this.errorMessage = "Username already taken !";
         } else {
           this.errorMessage = "An error occurred, please try again later";

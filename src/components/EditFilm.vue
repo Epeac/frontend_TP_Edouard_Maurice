@@ -38,7 +38,7 @@
 
 <script>
 import axios from 'axios';
-
+import {fetchFilmInfos, postFilm} from "/src/api.js";
 export default {
   data() {
     return {
@@ -59,11 +59,7 @@ export default {
   methods: {
     async fetchFilm() {
       try {
-        const { data } = await axios.get(`http://localhost:3000/locations/${this.filmId}`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          }
-        });
+        const data = await fetchFilmInfos(this.filmId);
         this.filmName = data.filmName;
         this.filmType = data.filmType;
         this.filmDirectorName = data.filmDirectorName;
@@ -76,22 +72,11 @@ export default {
       }
     },
     async submitEditForm() {
-      try {
-        await axios.patch(`http://localhost:3000/locations/${this.filmId}`, {
-          filmName: this.filmName,
-          filmType: this.filmType,
-          filmDirectorName: this.filmDirectorName,
-          filmProducerName: this.filmProducerName,
-          address: this.address,
-          district: this.district,
-          year: this.year
-        }, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          }
-        });
+      let response = await postFilm(this.filmName, this.filmType, this.filmDirectorName, this.filmProducerName, this.address, this.district, this.year, this.filmId);
+      if(response.success) {
         alert('Location updated successfully!');
-      } catch (error) {
+      }
+      else {
         alert('An error occurred, please try again later');
       }
     }

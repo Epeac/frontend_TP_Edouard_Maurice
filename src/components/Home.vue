@@ -3,11 +3,8 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      awesome: true,
       username: localStorage.getItem('username'),
       token: localStorage.getItem('token',),
-      role: localStorage.getItem('role',),
-      dataTest: [],
     };
   },
   computed: {
@@ -18,32 +15,13 @@ export default {
   },
   methods: {
     logout() {
-      this.token, this.role, this.username = null;
+      this.token, this.username = null;
       localStorage.removeItem('token');
       localStorage.removeItem('username');
-      localStorage.removeItem('role');
       this.goToPage('/login');
-    },
-    async getFilms() {
-      try {
-        const { data } = await axios.get('http://localhost:3000/locations', {
-          headers: {
-            'Authorization': `Bearer ${this.token}`,
-          },
-        });
-        this.dataTest = data;
-      }
-      catch(error) {
-        console.error(error);
-      }
     },
     goToPage(path) {
       this.$router.push({ path: path });
-    }
-  },
-  mounted() {
-    if (this.token) {
-      this.getFilms();
     }
   },
 }

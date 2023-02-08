@@ -17,8 +17,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-//import { goToPage } from './Home.vue';
+import {login} from "/src/api.js";
 
 export default {
   data() {
@@ -28,26 +27,14 @@ export default {
     }
   },
   methods: {
-    async userRole() {
-      const response = await axios.get('http://localhost:3000/users/me', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        }
-      },);
-      return response.data.role;
-    },
-    async login(username, password) {
-      try {
-        const response = await axios.post('http://localhost:3000/users/login', {username, password});
-        localStorage.setItem('token', response.data.jwt);
-        localStorage.setItem('username', username);
-      } catch (error) {
-        console.error(error);
-      }
-    },
     async submitLoginForm() {
-      await this.login(this.username, this.password);
-      this.$router.push({ path: '/' });
+      let response = await login(this.username, this.password);
+      if(response.success) {
+        this.$router.push({ path: '/' });
+      }
+      else {
+        console.error(response.error);
+      }
     }
   }
 };

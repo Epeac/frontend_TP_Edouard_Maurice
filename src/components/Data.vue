@@ -17,6 +17,7 @@
 
 <script>
 import axios from 'axios';
+import {userRole} from "/src/api.js";
 export default {
   data() {
     return {
@@ -36,21 +37,9 @@ export default {
   },
   async mounted() {
     await this.fetchFilms();
-    this.role = await this.userRole();
+    this.role = await userRole();
   },
   methods: {
-    async userRole() {
-      try {
-        const response = await axios.get('http://localhost:3000/users/me', {
-          headers: {
-            'Authorization': `Bearer ${this.token}`,
-          }
-        },);
-        return response.data.role;
-      } catch (error) {
-        return error.response;
-      }
-    },
     async fetchFilms() {
       const { data } = await axios.get('http://localhost:3000/locations', {
         headers: {
