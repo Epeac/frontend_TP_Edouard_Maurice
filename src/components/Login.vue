@@ -57,18 +57,4 @@ export default {
     }
   }
 };
-/*
-async login() {
-  try {
-    const { data } = await axios.post('http://localhost:3000/users/login', {
-      username: this.username,
-      password: this.password,
-    });
-    this.token = data.jwt;
-    localStorage.setItem('token', data.token);
-  }
-  catch (error) {
-    console.error(error);
-  }
-},*/
 </script>

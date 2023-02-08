@@ -1,7 +1,6 @@
 <script>
 import axios from 'axios';
 export default {
-  name: "Home",
   data() {
     return {
       awesome: true,
@@ -13,15 +12,11 @@ export default {
   },
   computed: {
     message() {
-      return this.token ? `Welcome ${localStorage.getItem('username')} !` : 'Please Login';
+      return this.token ? `Welcome ${localStorage.getItem('username')} !` : "Please Login. " +
+          "If not, you will automatically be redirected to the Login page if you try to access the Data page.";
     },
   },
   methods: {
-    toggle() {
-      this.awesome = !this.awesome
-      this.testStorage = "ça marche !"
-      localStorage.setItem("test", this.testStorage)
-    },
     logout() {
       this.token, this.role, this.username = null;
       localStorage.removeItem('token');
@@ -55,45 +50,14 @@ export default {
 </script>
 
 <template>
-  <!--<header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-
-    <div>
-      <button @click="toggle">toggle</button>
-      <h1 v-if="awesome">Vue is awesome!</h1>
-      <h1 v-else>Oh no 😢</h1>
-    </div>
-
-    <div>{{ testStorage}}</div>
-
-    <div>
-      <h1>{{ message }}</h1>
-    </div>
-  </header>-->
-
   <main>
     <p>{{message}}</p>
-    <template v-if="!token">
-      <div>
-        <button @click="goToPage('/')">Home</button>
-        <button @click="goToPage('/login')">Login</button>
-        <button @click="goToPage('/data')">Data</button>
-        <router-view />
-      </div>
-      <!--<router-view />
-      <button @click="goToLoginPage">Login</button>
-      <form @submit.prevent="login">
-        <input type="text" v-model="username"/>
-        <input type="password" v-model="password"/>
-        <button type="submit">Login</button>
-      </form>-->
+    <template v-if="token">
+      <button @click="logout">Logout</button>
     </template>
     <template v-else>
-      <button @click="logout">Logout</button>
+      <button @click="goToPage('/login')">Login</button>
+      <button @click="goToPage('/register')">Register</button>
     </template>
   </main>
 </template>
