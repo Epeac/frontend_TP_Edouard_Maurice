@@ -41,12 +41,6 @@ export default {
         const response = await axios.post('http://localhost:3000/users/login', {username, password});
         localStorage.setItem('token', response.data.jwt);
         localStorage.setItem('username', username);
-        const tmp = await axios.get('http://localhost:3000/users/me', {
-          headers: {
-            'Authorization': `Bearer ${response.data.jwt}`,
-          }
-      });
-        localStorage.setItem('role', tmp.data.role);
       } catch (error) {
         console.error(error);
       }

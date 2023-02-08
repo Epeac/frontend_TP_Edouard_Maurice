@@ -35,7 +35,19 @@ export default {
           username: this.username,
           password: this.password,
         });
-        await Login.login(this.username, this.password);
+        //await Login.login(this.username, this.password);
+
+        try {
+          const response = await axios.post('http://localhost:3000/users/login', {
+            username: this.username,
+            password: this.password,
+          });
+          localStorage.setItem('token', response.data.jwt);
+          localStorage.setItem('username', this.username);
+        } catch (error) {
+          console.error(error);
+        }
+
         this.$router.push({ path: '/' });
       } catch (error) {
         if (error.response.status === 400) {

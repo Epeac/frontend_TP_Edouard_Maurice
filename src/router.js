@@ -3,9 +3,9 @@ import Home from "./components/Home.vue";
 import Login from "./components/Login.vue";
 import Data from "./components/Data.vue";
 import Register from "./components/Register.vue";
-import FilmDetails from "@/components/FilmDetails.vue";
-import CreateFilm from "@/components/CreateFilm.vue";
-import EditFilm from "@/components/EditFilm.vue";
+import FilmDetails from "./components/FilmDetails.vue";
+import CreateFilm from "./components/CreateFilm.vue";
+import EditFilm from "./components/EditFilm.vue";
 
 const routes = [
     { path: '/', name: "Home", component: Home },
