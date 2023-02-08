@@ -42,15 +42,15 @@ export default {
       filmDirectorName: '',
       filmProducerName: '',
       address: '',
-      district: 0,
-      year: 0
+      district: '',
+      year: '',
     };
   },
   methods: {
     async submitForm() {
       try {
         await axios.post('http://localhost:3000/locations', {
-          name: this.name,
+          filmName: this.filmName,
           filmType: this.filmType,
           filmDirectorName: this.filmDirectorName,
           filmProducerName: this.filmProducerName,
@@ -61,7 +61,7 @@ export default {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           }});
-        this.name = '';
+        this.filmName = '';
         this.filmType = '';
         this.filmDirectorName = '';
         this.filmProducerName = '';

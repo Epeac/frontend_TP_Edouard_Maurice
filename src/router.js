@@ -4,15 +4,23 @@ import Login from "./components/Login.vue";
 import Data from "./components/Data.vue";
 import Register from "./components/Register.vue";
 import FilmDetails from "@/components/FilmDetails.vue";
-import createFilm from "@/components/createFilm.vue";
+import CreateFilm from "@/components/CreateFilm.vue";
+import EditFilm from "@/components/EditFilm.vue";
 
 const routes = [
     { path: '/', name: "Home", component: Home },
     { path: '/login', name: "Login", component: Login },
-    { path: '/data', name: "Data", component: Data },
+    { path: '/data', name: "Data", component: Data, beforeEnter: (to, from, next) => {
+        if(localStorage.getItem('token')) {
+            next();
+        } else {
+            next('login');
+        }
+        }},
     { path: '/register', name: "Register", component: Register },
     { path: '/filmDetails/:filmId', component: FilmDetails },
-    { path: '/createFilm', component: createFilm },
+    { path: '/createFilm', component: CreateFilm },
+    { path: '/editFilm/:filmId', component: EditFilm },
 ]
 
 const router = createRouter({

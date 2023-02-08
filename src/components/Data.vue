@@ -1,5 +1,10 @@
 <template>
   <br />
+  <!--<h2>Data:</h2>
+  <ul v-if="dataTest.length">
+    <li v-for="item in dataTest" :key="item._id">{{ item.filmType }}</li>
+  </ul>
+  <p v-else>No data to display</p>-->
   <div>
     <div v-for="film in currentFilms" :key="film._id">
       <button @click="goToFilmDetails(film._id)">{{ film.filmName }}</button>
@@ -28,10 +33,6 @@ export default {
     };
   },
   computed: {
-    async isAdmin() {
-      const tmp = await this.userRole();
-      return tmp === 'admin';
-    },
     currentFilms() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;

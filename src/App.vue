@@ -1,23 +1,20 @@
 <script>
 export default {
-  data() {
-    return {
-      token: localStorage.getItem('token',),
-      isLoggedIn: false,
-    }
-  },
-  mounted() {
-    if(this.token) {
-      this.isLoggedIn = true;
-    }
+  computed: {
+    isLoggedIn() {
+      return !!localStorage.getItem('token',);
+    },
   }
 }
 </script>
 
 <template>
-  <nav>
+  <nav v-if="!isLoggedIn">
     <router-link to="/">Home</router-link> |
-    <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
+    <router-link to="/login">Login</router-link>
+  </nav>
+  <nav v-else>
+    <router-link to="/">Home</router-link> |
     <router-link v-if="isLoggedIn" to="/data">Data</router-link>
   </nav>
   <router-view/>

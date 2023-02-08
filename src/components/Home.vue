@@ -5,7 +5,6 @@ export default {
   data() {
     return {
       awesome: true,
-      //testStorage: localStorage.getItem("test") || "flûte",
       username: localStorage.getItem('username'),
       token: localStorage.getItem('token',),
       role: localStorage.getItem('role',),
@@ -14,7 +13,7 @@ export default {
   },
   computed: {
     message() {
-      return this.token ? 'Welcome !' : 'Please Login';
+      return this.token ? `Welcome ${localStorage.getItem('username')} !` : 'Please Login';
     },
   },
   methods: {
@@ -34,7 +33,7 @@ export default {
       try {
         const { data } = await axios.get('http://localhost:3000/locations', {
           headers: {
-            'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2QwZTdiYjNhMmFiNzYxOTlmZDVjYzgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzU1OTU3MzJ9.flVvfL56ttQNBcfrsiwcCtM1sgGk87hCT0HHKlqcJno`, //${this.token}`,
+            'Authorization': `Bearer ${this.token}`,
           },
         });
         this.dataTest = data;
@@ -77,11 +76,9 @@ export default {
   </header>-->
 
   <main>
+    <p>{{message}}</p>
     <template v-if="!token">
       <div>
-        <!--<router-link to="/">Home</router-link> |
-        <router-link to="/login">Login</router-link> |
-        <router-link to="Data">Data</router-link>-->
         <button @click="goToPage('/')">Home</button>
         <button @click="goToPage('/login')">Login</button>
         <button @click="goToPage('/data')">Data</button>
@@ -96,14 +93,7 @@ export default {
       </form>-->
     </template>
     <template v-else>
-      <p>Welcome {{ username }} !</p>
-      <p>Here is your token -- {{token}}</p>
       <button @click="logout">Logout</button>
-      <h2>Data:</h2>
-      <ul v-if="dataTest.length">
-        <li v-for="item in dataTest" :key="item._id">{{ item.filmType }}</li>
-      </ul>
-      <p v-else>No data to display</p>
     </template>
   </main>
 </template>
