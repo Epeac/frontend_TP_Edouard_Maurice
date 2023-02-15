@@ -49,7 +49,7 @@ export default {
   methods: {
     async submitForm() {
       try {
-        await axios.post('http://localhost:3000/locations', {
+        await axios.post('https://backend-webapps-esilv.onrender.com/locations', {
           filmName: this.filmName,
           filmType: this.filmType,
           filmDirectorName: this.filmDirectorName,

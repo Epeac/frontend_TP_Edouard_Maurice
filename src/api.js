@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const base = axios.create({ baseURL: 'http://localhost:3000/'});
+const base = axios.create({ baseURL: 'https://backend-webapps-esilv.onrender.com/'});
 
 export const login = async (username, password) => {
     try {
