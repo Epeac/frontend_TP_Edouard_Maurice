@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     async fetchFilms() {
-      const { data } = await axios.get('https://backend-webapps-esilv.onrender.com/locations', {
+      const { data } = await axios.get('https://edouard-tp-web-dev-bbw9.onrender.com/locations', {
         headers: {
           'Authorization': `Bearer ${this.token}`,
         }});
